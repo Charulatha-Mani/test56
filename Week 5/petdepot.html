@@ -1,31 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Loading Vue.j from server -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
     <title>Vue.js Pet Depot</title>
 </head>
+
 <body>
     <!-- The element where Vue will mount -->
     <div id="app">
         <header>
             <h1 v-text="sitename"></h1>
+            <button v-on:click="showCheckout">
+                {{ cartItemCount }}
+                <span class="fas fa-cart-plus"></span>
+                Checkout
+            </button>
         </header>
-        
+
         <main>
-        <figure>
-            <img v-bind:src="product.image" height="100" width="100">
-        </figure>
-        <h2 v-text="product.title"></h2>
-        <p v-html="product.description"></p>
-        <p>Price: {{ product.price }}</p>
-        <button v-on:click="addToCart" v-if="canAddToCart">Add to Cart</button>
-        <button disabled="disabled" v-else>Add To cart</button>
-        <h1>LOLLLL</h1>
-        
+            <div v-if="showProduct">
+                <figure>
+                    <img v-bind:src="product.image" height="100" width="100">
+                </figure>
+                <h2 v-text="product.title"></h2>
+                <p v-html="product.description"></p>
+                <p>Price: {{ product.price }}</p>
+                <button v-on:click="addToCart">Add to Cart</button>
+                <button v-on:click="showCheckout">
+                    {{ cartItemCount }}
+                    <span class="fas fa-cart-plus"></span>
+                    Checkout
+                </button>
+            </div>
+            <div v-else>
+                <h2>Checkout</h2>
+            </div>
+
         </main>
     </div>
 
@@ -42,22 +58,28 @@
                     price: 2000,
                     image: "images/catfood.jpg"
                 },
-                cart:[],
+                cart: [],
+                showProduct: true,
             },
             methods: {
-                addToCart: function() {
+                addToCart: function () {
                     this.cart.push(this.product.id);
                     // console.log(this.cart);
+                },
+                showCheckout() {
+                    // console.log(this.showProduct)
+                    this.showProduct = this.showProduct ? false : true;
                 }
             },
             computed: {
-                cartItemCount: function() {
+                cartItemCount: function () {
                     return this.cart.length || '';
                 }
             }
         });
     </script>
 </body>
+
 </html>
 
 <!-- v-on
