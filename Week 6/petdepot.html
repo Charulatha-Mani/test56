@@ -60,10 +60,13 @@
                     <strong>State: </strong>
                     <select v-model="order.state" class="form-control">
                         <option disabled value="">State</option>
-                        <option v-bind:value="states.AL">AL</option>
+                        <option v-for="(state,key) in states" v-bind:value="state">
+                            {{ key }}
+                        </option>
+                        <!-- <option v-bind:value="states.AL">AL</option>
                         <option v-bind:value="states.AR">AR</option>
                         <option v-bind:value="states.CA">CA</option>
-                        <option v-bind:value="states.NV">NV</option>
+                        <option v-bind:value="states.NV">NV</option> -->
                     </select>
                 </p>
                 <p>
@@ -131,7 +134,7 @@
                     AR: 'Arizona',
                     CA: 'California',
                     NV: 'Nevada'
-                }
+                },
             },
             methods: {
                 addToCart: function () {
