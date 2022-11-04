@@ -58,12 +58,12 @@
                 </p>
                 <p>
                     <strong>State: </strong>
-                    <select v-model="order.state">
+                    <select v-model="order.state" class="form-control">
                         <option disabled value="">State</option>
-                        <option>AL</option>
-                        <option>AR</option>
-                        <option>CA</option>
-                        <option>NV</option>
+                        <option v-bind:value="states.AL">AL</option>
+                        <option v-bind:value="states.AR">AR</option>
+                        <option v-bind:value="states.CA">CA</option>
+                        <option v-bind:value="states.NV">NV</option>
                     </select>
                 </p>
                 <p>
@@ -73,8 +73,7 @@
 
                 <p>
                     <input type="checkbox" id="gift" value="true" v-model="order.gift"
-                    v-bind:true-value="order.sendGift"
-                    v-bind:false-value="order.dontSendGift">
+                        v-bind:true-value="order.sendGift" v-bind:false-value="order.dontSendGift">
                     <label for="gift">Ship as a Gift?</label>
                 </p>
                 <p>
@@ -125,8 +124,14 @@
                     method: 'Home',
                     gift: false,
                     sendGift: 'Send as a Gift',
-                    dontSendGift: 'Do not send as a gift'
+                    dontSendGift: 'Do not send as a gift',
                 },
+                states: {
+                    AL: 'Alabama',
+                    AR: 'Arizona',
+                    CA: 'California',
+                    NV: 'Nevada'
+                }
             },
             methods: {
                 addToCart: function () {
