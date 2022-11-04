@@ -94,6 +94,7 @@
                 <p>Zip/Postal Code: {{ order.zip }}</p>
                 <p>Method: {{ order.method }}</p>
                 <p>Gift: {{ order.gift }}</p>
+                <button v-on:click="submitForm">Place Order</button>
             </div>
 
         </main>
@@ -135,6 +136,9 @@
                 showCheckout() {
                     // console.log(this.showProduct)
                     this.showProduct = this.showProduct ? false : true;
+                },
+                submitForm() {
+                    alert('Order Submitted');
                 }
             },
             computed: {
