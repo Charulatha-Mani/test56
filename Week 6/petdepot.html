@@ -42,11 +42,11 @@
                 <h2>Checkout</h2>
                 <p>
                     <strong>First Name: </strong>
-                    <input v-model="order.firstName">
+                    <input v-model.trim="order.firstName">
                 </p>
                 <p>
                     <strong>Last Name: </strong>
-                    <input v-model="order.lastName">
+                    <input v-model.trim="order.lastName">
                 </p>
                 <p>
                     <strong>Address: </strong>
@@ -71,7 +71,7 @@
                 </p>
                 <p>
                     <strong>Zip/Postal Code: </strong>
-                    <input v-model="order.zip">
+                    <input v-model.number="order.zip" type="number">
                 </p>
 
                 <p>
