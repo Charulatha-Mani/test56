@@ -32,9 +32,13 @@
                 <p v-html="product.description"></p>
                 <p>Price: {{ product.price }}</p>
                 <button v-on:click="addToCart" v-if="canAddToCart">Add to Cart</button>
-                <span v-if="product.availableInventory - cartItemCount < 5">
-                    Only {{ product.availableInventory - cartItemCount }} left!
+                <span v-if="product.availableInventory === cartItemCount">
+                    All Out!
                 </span>
+                <span v-else-if="product.availableInventory - cartItemCount < 5">
+                    Only {{ product.availableInventory - cartItemCount }} left!
+                </span> 
+                <span v-else>Buy now!</span>
                 <button v-on:click="showCheckout">
                     {{ cartItemCount }}
                     <span class="fas fa-cart-plus"></span>
