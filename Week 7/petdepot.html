@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Loading Vue.j from server -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
     <title>Vue.js Pet Depot</title>
 </head>
 
@@ -39,6 +38,10 @@
                     Only {{ product.availableInventory - cartItemCount }} left!
                 </span> 
                 <span v-else>Buy now!</span>
+                <div>
+                    <span v-for="n in product.rating"><i class="fa-solid fa-star"></i></span>
+                    <span v-for="n in 5-product.rating"><i class="fa-regular fa-star"></i></span>
+                </div>
                 <button v-on:click="showCheckout">
                     {{ cartItemCount }}
                     <span class="fas fa-cart-plus"></span>
@@ -122,6 +125,7 @@
                     price: 2000,
                     image: "images/catfood.jpg",
                     availableInventory: 10,
+                    rating: 3,
                 },
                 cart: [],
                 showProduct: true,
