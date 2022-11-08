@@ -26,7 +26,7 @@
 
         <main>
             <div v-if="showProduct">
-                <div v-for="product in product">
+                <div v-for="product in sortedProducts">
                     <figure>
                         <img v-bind:src="product.image" height="100" width="100">
                     </figure>
@@ -173,6 +173,17 @@
                 cartItemCount: function () {
                     return this.cart.length || '';
                 },
+                sortedProducts() {
+                    let productsArray = this.product.slice(0);
+                    function compare(a,b) {
+                        if (a.price > b.price)
+                            return 1;
+                        if (a.price < b.price)
+                            return -1;
+                        return 0;
+                    }
+                    return productsArray.sort(compare);
+                }
                 // canAddToCart: function () {
                 //     return this.product.availableInventory > this.cartItemCount;
                 // }
