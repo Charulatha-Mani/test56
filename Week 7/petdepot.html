@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Loading Vue.j from server -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+    <script src="products.js"></script>
     <title>Vue.js Pet Depot</title>
 </head>
 
@@ -24,23 +26,25 @@
 
         <main>
             <div v-if="showProduct">
-                <figure>
-                    <img v-bind:src="product.image" height="100" width="100">
-                </figure>
-                <h2 v-text="product.title"></h2>
-                <p v-html="product.description"></p>
-                <p>Price: {{ product.price }}</p>
-                <button v-on:click="addToCart" v-if="canAddToCart">Add to Cart</button>
-                <span v-if="product.availableInventory === cartItemCount">
-                    All Out!
-                </span>
-                <span v-else-if="product.availableInventory - cartItemCount < 5">
-                    Only {{ product.availableInventory - cartItemCount }} left!
-                </span> 
-                <span v-else>Buy now!</span>
-                <div>
-                    <span v-for="n in product.rating"><i class="fa-solid fa-star"></i></span>
-                    <span v-for="n in 5-product.rating"><i class="fa-regular fa-star"></i></span>
+                <div v-for="product in product">
+                    <figure>
+                        <img v-bind:src="product.image" height="100" width="100">
+                    </figure>
+                    <h2 v-text="product.title"></h2>
+                    <p v-html="product.description"></p>
+                    <p>Price: {{ product.price }}</p>
+                    <button v-on:click="addToCart(product)" v-if="canAddToCart(product)">Add to Cart</button>
+                    <span v-if="product.availableInventory === cartCount(product.id)">
+                        All Out!
+                    </span>
+                    <span v-else-if="product.availableInventory - cartCount(product.id) < 5">
+                        Only {{ product.availableInventory - cartCount(product.id) }} left!
+                    </span>
+                    <span v-else>Buy now!</span>
+                    <div>
+                        <span v-for="n in product.rating"><i class="fa-solid fa-star"></i></span>
+                        <span v-for="n in 5-product.rating"><i class="fa-regular fa-star"></i></span>
+                    </div>
                 </div>
                 <button v-on:click="showCheckout">
                     {{ cartItemCount }}
@@ -118,15 +122,7 @@
             el: "#app", //The 'option object': DOM mounting point
             data: {
                 sitename: 'Vue.js Pet Depot',
-                product: {
-                    id: 1001,
-                    title: "Cat Food, 25lb bag",
-                    description: "A 25 pound bag of <em>irresistible</em>," + "organic goodness for your cat.",
-                    price: 2000,
-                    image: "images/catfood.jpg",
-                    availableInventory: 10,
-                    rating: 3,
-                },
+                product: products,
                 cart: [],
                 showProduct: true,
                 order: {
@@ -149,8 +145,8 @@
                 },
             },
             methods: {
-                addToCart: function () {
-                    this.cart.push(this.product.id);
+                addToCart: function (product) {
+                    this.cart.push(product.id);
                     // console.log(this.cart);
                 },
                 showCheckout() {
@@ -159,15 +155,27 @@
                 },
                 submitForm() {
                     alert('Order Submitted');
+                },
+                canAddToCart: function (product) {
+                    return product.availableInventory > this.cartCount(product.id);
+                },
+                cartCount(id) {
+                    let count = 0;
+                    for (let i = 0; i < this.cart.length; i++) {
+                        if (this.cart[i] === id) {
+                            count++;
+                        }
+                    }
+                    return count;
                 }
             },
             computed: {
                 cartItemCount: function () {
                     return this.cart.length || '';
                 },
-                canAddToCart: function () {
-                    return this.product.availableInventory > this.cartItemCount;
-                }
+                // canAddToCart: function () {
+                //     return this.product.availableInventory > this.cartItemCount;
+                // }
             }
         });
     </script>
