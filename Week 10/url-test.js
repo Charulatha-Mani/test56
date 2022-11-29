@@ -1,6 +1,5 @@
 // Requires a 'url' module and puts it in a 'url' variable
 var url = require("url");
-
 // Uses the parse function of the 'url' module
 var parsedURL = url.parse("html://ww.example.com/profile?name=barry");
 console.log(parsedURL.protocol); //"http:"
